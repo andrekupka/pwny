@@ -66,10 +66,6 @@ class RopChain:
         self._chain.append(self._pack_value(value, size, little_endian))
 
     def addr(self, name, bin_name=None, size=None, little_endian=None):
-        if bin_name is None:
-            if self._pwny._default_binary is None:
-                raise Exception("There is no default binary")
-            bin_name = self._pwny._default_binary.get_name()
         self._chain.append(lambda: self._pack_addr(name, bin_name, size,
                                                    little_endian))
 

@@ -19,6 +19,14 @@ class BinaryBase(metaclass=ABCMeta):
     def __setitem__(self, index, value):
         self.add_offset(index, value)
 
+    def __getitem__(self, index):
+        address = self._get_address(name, 0)
+        if address is None:
+            raise KeyError("'{}' cannot be looked up in {}"
+                           .format(name, self._name))
+        return address
+
     def add_offset(self, name, offset):
-        # TODO check for duplicated offsets?
+        if name in self._offsets:
+            raise ValueError("Duplicated offset '{}'".format(name))
         self._offsets[name] = offset

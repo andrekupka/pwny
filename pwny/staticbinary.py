@@ -6,4 +6,7 @@ class StaticBinary(BinaryBase):
         super().__init__(name, offsets)
 
     def get_address(self, name, offset=0):
-        return self._offsets[name] + offset
+        address_offset = self._offsets.get(name)
+        if address_offset is None:
+            return None
+        return address_offset + offset

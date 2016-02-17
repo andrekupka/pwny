@@ -23,8 +23,7 @@ def delayed(f):
 class Pwny:
     def __init__(self, sock=None, dump_received=True, try_decode_received=True,
                  word_size=8, little_endian=True, delay=0.1,
-                 confirm_send=False,
-                 default_binary=None, additional_binaries=None):
+                 confirm_send=False, binaries=None):
         """
         Constructor.
 
@@ -40,12 +39,9 @@ class Pwny:
         self._delay = delay
         self._confirm_send = confirm_send
         self._binary_store = BinaryStore()
-        self._default_binary = default_binary
-        if default_binary:
-            self._binary_store.add_binary(default_binary)
-        additional_binaries = additional_binaries or list()
-        for additional_binary in additional_binaries:
-            self._binary_store.add_binary(additional_binary)
+        binaries = binaries or list()
+        for binary in binaries:
+            self._binary_store.add_binary(binary)
 
     def connect(self, host, port):
         """
