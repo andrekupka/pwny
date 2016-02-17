@@ -33,6 +33,12 @@ class RopChain:
         """
         self.value(value, size=1)
 
+    def newline(self):
+        """
+        Adds a newline to the chain.
+        """
+        self.byte(0xa)
+
     def word(self, value, little_endian=None):
         """
         Adds a word (2 bytes) to the chain.
@@ -57,9 +63,24 @@ class RopChain:
         bytes with the given endianess. If none is specified the word size and
         endianess of the parent Pwny is used.
         """
+        self._chain.append(self._pack_value(value, size, little_endian))
+
+    def addr(self, name, bin_name=None, size=None, little_endian=None):
+        if bin_name is None:
+            if self._pwny._default_binary is None:
+                raise Exception("There is no default binary")
+            bin_name = self._pwny._default_binary.get_name()
+        self._chain.append(lambda: self._pack_addr(name, bin_name, size,
+                                                   little_endian))
+
+    def _pack_addr(self, name, bin_name, size, little_endian):
+        address = self._pwny._binary_store.get_address(name, bin_name)
+        return self._pack_value(address, size, little_endian)
+
+    def _pack_value(self, value, size, little_endian):
         size = size or self._pwny._word_size
         little_endian = little_endian or self._pwny._little_endian
-        self._chain.append(pack_value(value, size))
+        return pack_value(value, size, little_endian)
 
     def serialize(self):
         """
