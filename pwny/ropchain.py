@@ -3,6 +3,10 @@ from .util import encode_as_bytes, pack_value
 
 class RopChain:
     def __init__(self, pwny):
+        """Constructor.
+
+        :param pwny.Pwny pwny: the parent Pwny that has created the chain
+        """
         self._pwny = pwny
         self._chain = list()
 
@@ -13,9 +17,12 @@ class RopChain:
         return self._pwny
 
     def append(self, obj):
-        """
-        Appends a generic object to the rop chain and tries to convert is to
+        """Appends a generic object to the rop chain and tries to convert is to
         byte string.
+
+        Long.
+
+        :param object obj: the generic object that is to be added
         """
         self._chain.append(obj)
 

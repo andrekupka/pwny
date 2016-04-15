@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name="pwny",
-    version="0.1.2",
+    version="0.1.3",
     author="André Kupka",
     author_email="kupka@in.tum.de",
     description="A small binary exploitation framework.",

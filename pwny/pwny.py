@@ -27,9 +27,8 @@ class Pwny:
         """
         Constructor.
 
-        :param sock: a initialized non-connected socket or None if a socket
+        :param socket.socket sock: a initialized non-connected socket or None if a socket
             shall be created
-        :type sock: socket.socket or None
         """
         self._sock = sock or socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._dump_received = dump_received
@@ -51,8 +50,8 @@ class Pwny:
 
     def half_close(self):
         """
-        Half closes the internal socket so that a remote read will fail, remote
-        messages can still be received.
+        Half closes the internal socket so that a remote read will fail but
+        remote messages can still be received.
         """
         self._sock.shutdown(socket.SHUT_WR)
 
@@ -75,11 +74,9 @@ class Pwny:
         self._little_endian = little_endian
 
     def set_word_size(self, word_size):
-        """
-        Sets the word size of the exploited binary.
+        """Sets the word size of the exploited binary.
 
-        :param word_wize: must be 1, 2, 4 or 8
-        :type word_size: int
+        :param int word_wize: must be 1, 2, 4 or 8
         """
         if word_size not in [1,2,4,8]:
             raise Exception("Illegal word size: %d".format(word_size))
@@ -202,6 +199,10 @@ class Pwny:
         Receives from the remote until a newline is received.
         """
         return self.recv_until(b"\n")
+
+    def recv_lines(self, count):
+        for _ in range(count):
+            self.recv_line(self)
 
     def prompt(self, prompt=None):
         """
