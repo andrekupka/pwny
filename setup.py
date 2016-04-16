@@ -10,7 +10,7 @@ setup(
     license="MIT",
     keywords="binary exploitation pwning pwny",
     url="https://github.com/fr3akout/pwny",
-    packages=["pwny"],
+    packages=["pwny", "pwny.formatstring", "pwny.util"],
     long_description="A small binary exploitation framework, that provides "
             "functionality to communicate with remote servers and write rop "
             "chains.",
